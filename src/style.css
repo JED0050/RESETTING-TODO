@@ -1,0 +1,27 @@
+body {
+    background-color: rgb(116, 49, 194);
+}
+
+body {
+    color: white;
+}
+
+input[type=checkbox]:checked + label.strikethrough{
+    text-decoration: line-through;
+}
+
+.checkboxPanel {
+    margin: auto;
+    width: 40%;
+    border: 3px solid white;
+    padding: 10px;
+    text-align: center;
+}
+
+.checkbox {
+    margin: auto;
+    width: 40%;
+    padding-left: 10%;
+    border: 3px solid rgb(255, 0, 0);
+    text-align: left;
+}
