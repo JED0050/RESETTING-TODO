@@ -6,26 +6,36 @@
     <title>RESETTING TODO LIST</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-    <script src='main.js'></script>
+    <script src='script.js'></script>
 </head>
 <body>      
     <div class="checkboxPanel" id="checkboxPanel">
-        <h2>RESETTING TODO LIST</h2><br>
-        <div class="checkbox" id="classDiv">
-            <p>Mage</p>
-            <input type="checkbox" id="task1">
-            <label for="task1" class="strikethrough"> Vault </label><br>
-            <input type="checkbox" id="task2">
-            <label for="task2" class="strikethrough"> SOO </label><br>
-            <input type="checkbox" id="task3">
-            <label for="task3" class="strikethrough"> NW </label><br><br>
+        <div class="headingDiv">
+            <h2>RESETTING TODO LIST</h2><br>
         </div>
-        <div class="checkbox" id="classDiv">
-            <p>Paladin</p>
-            <input type="checkbox" id="task1">
-            <label for="task1" class="strikethrough"> SOO </label><br>
-            <input type="checkbox" id="task2">
-            <label for="task2" class="strikethrough"> BFA dungy </label><br><br>
+        <div class="appendingDiv">
+            <input type="text" id="todoItemText" value="xxx"><button onclick="addCheckboxElement()">CLICK ME</button>
+        </div>
+        <div class="checkboxes">
+            <div class="checkbox" id="classDiv" name="Mage">
+                <p>Mage</p>
+                <input type="checkbox" id="task1">
+                <label for="task1" class="strikethrough" onclick="removeElement(this)"> Vault <br></label>
+                <input type="checkbox" id="task2">
+                <label for="task2" class="strikethrough" onclick="removeElement(this)"> SOO <br></label>
+                <input type="checkbox" id="task3">
+                <label for="task3" class="strikethrough" onclick="removeElement(this)"> NW <br></label>
+            </div>
+            <div class="checkbox" id="classDiv" name="Paladin">
+                <p>Paladin</p>
+                <input type="checkbox" id="task1">
+                <label for="task1" class="strikethrough" onclick="removeElement(this)"> SOO </label><br>
+                <input type="checkbox" id="task2">
+                <label for="task2" class="strikethrough" onclick="removeElement(this)"> BFA dungy </label><br>
+            </div>
+        </div>
+        <div class="optionsDiv">
+            <button>X</button>
         </div>
     </div>
 </body>

@@ -18,10 +18,15 @@ input[type=checkbox]:checked + label.strikethrough{
     text-align: center;
 }
 
-.checkbox {
+.checkboxes {
     margin: auto;
     width: 40%;
     padding-left: 10%;
     border: 3px solid rgb(255, 0, 0);
     text-align: left;
+}
+
+.optionsDiv {
+    float: right;
+    width: 30%;
 }
