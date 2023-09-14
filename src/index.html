@@ -8,34 +8,49 @@
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
     <script src='script.js'></script>
 </head>
-<body>      
+<body>
     <div class="checkboxPanel" id="checkboxPanel">
         <div class="headingDiv">
             <h2>RESETTING TODO LIST</h2><br>
         </div>
         <div class="appendingDiv">
-            <input type="text" id="todoItemText" value="xxx"><button onclick="addCheckboxElement()">CLICK ME</button>
+            <input type="text" id="todoItemText" value="xxx">
+            <button onclick="addTodoItem()">ADD ITEM</button>
+            <button onclick="addCategory()">ADD CATEGORY</button><br>
         </div>
-        <div class="checkboxes">
-            <div class="checkbox" id="classDiv" name="Mage">
+        <div class="checkboxes" id="categories">
+            <div class="checkboxCategory" id="classDivMage" name="Mage" onclick="setSelectedCatagoryID(this)">
                 <p>Mage</p>
-                <input type="checkbox" id="task1">
-                <label for="task1" class="strikethrough" onclick="removeElement(this)"> Vault <br></label>
-                <input type="checkbox" id="task2">
-                <label for="task2" class="strikethrough" onclick="removeElement(this)"> SOO <br></label>
-                <input type="checkbox" id="task3">
-                <label for="task3" class="strikethrough" onclick="removeElement(this)"> NW <br></label>
+                <div onclick="removeElement(this)">
+                    <input type="checkbox" id="task1">
+                    <label for="task1" class="strikethrough"> Vault </label><br>
+                </div>
+                <div onclick="removeElement(this)">
+                    <input type="checkbox" id="task2">
+                    <label for="task2" class="strikethrough"> SOO </label><br>
+                </div>
+                <div onclick="removeElement(this)">
+                    <input type="checkbox" id="task3">
+                    <label for="task3" class="strikethrough"> NW </label><br>
+                </div>
             </div>
-            <div class="checkbox" id="classDiv" name="Paladin">
+            <div class="checkboxCategory" id="classDivPaladin" name="Paladin" onclick="setSelectedCatagoryID(this)">
                 <p>Paladin</p>
-                <input type="checkbox" id="task1">
-                <label for="task1" class="strikethrough" onclick="removeElement(this)"> SOO </label><br>
-                <input type="checkbox" id="task2">
-                <label for="task2" class="strikethrough" onclick="removeElement(this)"> BFA dungy </label><br>
+                <div onclick="removeElement(this)">
+                    <input type="checkbox" id="task1">
+                    <label for="task1" class="strikethrough"> SOO </label><br>
+                </div>
+                <div onclick="removeElement(this)">
+                    <input type="checkbox" id="task2">
+                    <label for="task2" class="strikethrough"> BFA dungy </label><br>
+                </div>
             </div>
         </div>
         <div class="optionsDiv">
-            <button>X</button>
+            <div>
+                <input type="checkbox" name="removeItemButton" id="removeItemButton">
+                <label for="removeItemButton">Rem</label>
+            </div>
         </div>
     </div>
 </body>

@@ -8,6 +8,7 @@ body {
 
 input[type=checkbox]:checked + label.strikethrough{
     text-decoration: line-through;
+    color: green;
 }
 
 .checkboxPanel {
@@ -22,11 +23,15 @@ input[type=checkbox]:checked + label.strikethrough{
     margin: auto;
     width: 40%;
     padding-left: 10%;
-    border: 3px solid rgb(255, 0, 0);
+    border: 3px solid white;
     text-align: left;
 }
 
 .optionsDiv {
     float: right;
     width: 30%;
+}
+
+#removeItemButton:checked + label{
+    color: red;
 }
