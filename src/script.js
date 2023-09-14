@@ -6,6 +6,7 @@ function removeElement(labelElement) {
         return;
 
     labelElement.remove();
+    saveLocalData();
 }
 
 function addTodoItem() {
@@ -17,10 +18,11 @@ function addTodoItem() {
         if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
             return;
 
-        var elementID = "test-text-1";
+        var elementID = "tasl-" + textInput;
         
         var containerElement = document.createElement("div");
         containerElement.onclick = function() { removeElement(this); };
+        containerElement.setAttribute("onlick", "removeElement(this)");
 
         var inputCheckbox = document.createElement("input");
         inputCheckbox.type = "checkbox";
@@ -36,6 +38,9 @@ function addTodoItem() {
         containerElement.appendChild(document.createElement("br"));
         
         parentElement.appendChild(containerElement);
+
+        saveLocalData();
+        //console.log(localStorage.getItem("categories-items"));
     }
 }
 
@@ -61,6 +66,8 @@ function addCategory() {
     checkboxCategoryElement.appendChild(nameCategoryElement);
 
     parentElement.appendChild(checkboxCategoryElement);
+
+    saveLocalData();
 }
 
 function firstCharUpperCase(text) {
@@ -80,4 +87,13 @@ function setSelectedCatagoryID(categoryElement) {
     categoryElement.getElementsByTagName("p")[0].style.textDecoration = "underline";
 }
 
-let selectedCatagoryID = undefined;
+function saveLocalData() {
+    var value = document.getElementById("categories").innerHTML;
+    localStorage.setItem("categories-items", value);
+}
+
+function loadLocalData() {
+    let selectedCatagoryID = undefined;
+    //return;
+    document.getElementById("categories").innerHTML = localStorage.getItem("categories-items");
+}
