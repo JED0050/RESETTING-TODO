@@ -5,7 +5,9 @@ function removeElement(labelElement) {
     if (labelElement == null)
         return;
 
+    //labelElement.innerHTML = '';
     labelElement.remove();
+    
     saveLocalData();
 }
 
@@ -21,8 +23,9 @@ function addTodoItem() {
         var elementID = "tasl-" + textInput;
         
         var containerElement = document.createElement("div");
+        containerElement.className = "list-item";
         containerElement.onclick = function() { removeElement(this); };
-        containerElement.setAttribute("onlick", "removeElement(this)");
+        //containerElement.setAttribute("onlick", "removeElement(this)");
 
         var inputCheckbox = document.createElement("input");
         inputCheckbox.type = "checkbox";
@@ -61,6 +64,8 @@ function addCategory() {
     checkboxCategoryElement.onclick = function() { setSelectedCatagoryID(this); };
 
     var nameCategoryElement = document.createElement("p");
+    nameCategoryElement.className = "category-item";
+    nameCategoryElement.onclick = function() { removeElement(nameCategoryElement); };
     nameCategoryElement.innerHTML = textInput;
 
     checkboxCategoryElement.appendChild(nameCategoryElement);
@@ -77,10 +82,9 @@ function firstCharUpperCase(text) {
 function setSelectedCatagoryID(categoryElement) {
     selectedCatagoryID = categoryElement.id;
 
-    var all = document.getElementsByClassName("checkboxCategory");
-
-    for (var i=0, max=all.length; i < max; i++) {
-        var paragraphElement = all[i].getElementsByTagName("p")[0];
+    var categoryElements = document.getElementsByClassName("checkboxCategory");
+    for (var i=0, max=categoryElements.length; i < max; i++) {
+        var paragraphElement = categoryElements[i].getElementsByTagName("p")[0];
         paragraphElement.style.textDecoration = "none";
     }
 
@@ -96,4 +100,9 @@ function loadLocalData() {
     let selectedCatagoryID = undefined;
     //return;
     document.getElementById("categories").innerHTML = localStorage.getItem("categories-items");
+
+    var listItems = document.getElementsByClassName("list-item");
+    for (var i = 0; i < listItems.length; i++) {
+        listItems[i].onclick = function() { removeElement(this); };
+    }
 }

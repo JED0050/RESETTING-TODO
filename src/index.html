@@ -8,7 +8,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
     <script src='script.js'></script>
 </head>
-<body onload="loadLocalData()">
+<body onload="loadLocalaData()">
     <div class="checkboxPanel" id="checkboxPanel">
         <div class="headingDiv">
             <h2>RESETTING TODO LIST</h2><br>
@@ -20,27 +20,27 @@
         </div>
         <div class="checkboxes" id="categories">
             <div class="checkboxCategory" id="classDivMage" name="Mage" onclick="setSelectedCatagoryID(this)">
-                <p>Mage</p>
-                <div onclick="removeElement(this)">
+                <p class="category-item" onclick="removeElement(this)">Mage</p>
+                <div class="list-item" onclick="removeElement(this)">
                     <input type="checkbox" id="task1">
                     <label for="task1" class="strikethrough"> Vault </label><br>
                 </div>
-                <div onclick="removeElement(this)">
+                <div class="list-item" onclick="removeElement(this)">
                     <input type="checkbox" id="task2">
                     <label for="task2" class="strikethrough"> SOO </label><br>
                 </div>
-                <div onclick="removeElement(this)">
+                <div class="list-item" onclick="removeElement(this)">
                     <input type="checkbox" id="task3">
                     <label for="task3" class="strikethrough"> NW </label><br>
                 </div>
             </div>
             <div class="checkboxCategory" id="classDivPaladin" name="Paladin" onclick="setSelectedCatagoryID(this)">
-                <p>Paladin</p>
-                <div onclick="removeElement(this)">
+                <p class="category-item" onclick="removeElement(this)">Paladin</p>
+                <div class="list-item" onclick="removeElement(this)">
                     <input type="checkbox" id="task1">
                     <label for="task1" class="strikethrough"> SOO </label><br>
                 </div>
-                <div onclick="removeElement(this)">
+                <div class="list-item" onclick="removeElement(this)">
                     <input type="checkbox" id="task2">
                     <label for="task2" class="strikethrough"> BFA dungy </label><br>
                 </div>
@@ -49,7 +49,11 @@
         <div class="optionsDiv">
             <div>
                 <input type="checkbox" name="removeItemButton" id="removeItemButton">
-                <label for="removeItemButton">Rem</label>
+                <label for="removeItemButton">RI</label>
+            </div>
+            <div>
+                <input type="checkbox" name="removeItemButton" id="removeItemButton">
+                <label for="removeItemButton">RC</label>
             </div>
         </div>
     </div>
