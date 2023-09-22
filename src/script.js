@@ -1,50 +1,53 @@
 function removeElement(labelElement) {
-    if (document.getElementById("removeItemButton").checked != true)
-        return;
-    
     if (labelElement == null)
         return;
 
-    //labelElement.innerHTML = '';
-    labelElement.remove();
-    
-    saveLocalData();
+    if (labelElement.className == "list-item" && document.getElementById("removeItemButton").checked) {
+        labelElement.remove();
+        saveLocalData();
+    }
+    else if (labelElement.className == "checkboxCategory" && document.getElementById("removeCategoryButton").checked) {
+        labelElement.remove();
+        saveLocalData();
+    }
 }
 
 function addTodoItem() {
     var parentElement = document.getElementById(selectedCatagoryID);
 
-    if(parentElement != null) {
-        var textInput = document.getElementById("todoItemText").value;
+    if(parentElement == null)
+        return;
 
-        if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
-            return;
+    var textInput = document.getElementById("todoItemText").value;
 
-        var elementID = "tasl-" + textInput;
-        
-        var containerElement = document.createElement("div");
-        containerElement.className = "list-item";
-        containerElement.onclick = function() { removeElement(this); };
-        //containerElement.setAttribute("onlick", "removeElement(this)");
+    if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
+        return;
 
-        var inputCheckbox = document.createElement("input");
-        inputCheckbox.type = "checkbox";
-        inputCheckbox.id = elementID;
-        
-        var labelCheckbox = document.createElement("label");
-        labelCheckbox.htmlFor = elementID;
-        labelCheckbox.className = "strikethrough";
-        labelCheckbox.textContent = " " + textInput + " ";
+    var elementID = "task-" + textInput;
+    
+    var containerElement = document.createElement("div");
+    containerElement.className = "list-item";
+    containerElement.onclick = function() { removeElement(this); };
+    //containerElement.setAttribute("onlick", "removeElement(this)");
 
-        containerElement.appendChild(inputCheckbox);
-        containerElement.appendChild(labelCheckbox);
-        containerElement.appendChild(document.createElement("br"));
-        
-        parentElement.appendChild(containerElement);
+    var inputCheckbox = document.createElement("input");
+    inputCheckbox.type = "checkbox";
+    inputCheckbox.addEventListener("change", function() { itemCheckedChange(this);} );
+    inputCheckbox.id = elementID;
+    
+    var labelCheckbox = document.createElement("label");
+    labelCheckbox.htmlFor = elementID;
+    labelCheckbox.className = "strikethrough";
+    labelCheckbox.textContent = " " + textInput + " ";
 
-        saveLocalData();
-        //console.log(localStorage.getItem("categories-items"));
-    }
+    containerElement.appendChild(inputCheckbox);
+    containerElement.appendChild(labelCheckbox);
+    containerElement.appendChild(document.createElement("br"));
+    
+    parentElement.appendChild(containerElement);
+
+    saveLocalData();
+    uncheckRemoveButtons();
 }
 
 function addCategory() {
@@ -73,10 +76,11 @@ function addCategory() {
     parentElement.appendChild(checkboxCategoryElement);
 
     saveLocalData();
+    uncheckRemoveButtons();
 }
 
 function firstCharUpperCase(text) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
 
 function setSelectedCatagoryID(categoryElement) {
@@ -101,8 +105,36 @@ function loadLocalData() {
     //return;
     document.getElementById("categories").innerHTML = localStorage.getItem("categories-items");
 
+    // remove item function + add event listener to checked
     var listItems = document.getElementsByClassName("list-item");
     for (var i = 0; i < listItems.length; i++) {
-        listItems[i].onclick = function() { removeElement(this); };
+        var listItem = listItems[i];
+        listItem.onclick = function() { removeElement(this); };
+        listItem.childNodes[0].addEventListener("change", function() { itemCheckedChange(this);} );
+        listItem.childNodes[1].addEventListener("change", function() { itemCheckedChange(this);} );
+        //alert(localStorage.getItem(listItem.id))
+        //if(localStorage.getItem(listItem.id) == "true") {
+        //    listItem.checked = true;
+        //}
     }
+
+    // remove category function
+    var listCategory = document.getElementsByClassName("checkboxCategory");
+    for (var i=0; i < listCategory.length; i++) {
+        listCategory[i].onclick = function() { setSelectedCatagoryID(this); removeElement(this); };
+    }
+}
+
+function uncheckRemoveButtons() {
+    document.getElementById("removeItemButton").checked = false;
+    document.getElementById("removeCategoryButton").checked = false;
+}
+
+function itemCheckedChange(item) {
+    /*if (item.checked) {
+        alert("x " + item.id + " Checkbox is checked..");
+    } else {
+        alert("x " +  item.id + " Checkbox is not checked..");
+    }*/
+    localStorage.setItem(item.id, item.checked);
 }
