@@ -1,9 +1,9 @@
-body {
-    background-color: rgb(116, 49, 194);
-}
+@import url('https://fonts.googleapis.com/css?family=Lato');
 
 body {
-    color: white;
+    background-color: rgb(116, 49, 194);
+    color: rgb(116, 49, 194);
+    font-family: Lato;
 }
 
 input[type=checkbox]:checked + label.strikethrough{
@@ -14,26 +14,43 @@ input[type=checkbox]:checked + label.strikethrough{
 
 .checkboxPanel {
     margin: auto;
-    width: 40%;
-    border: 3px solid white;
+    width: 30%;
+    border: 1px solid black;
+    background-color: aliceblue;
     padding: 10px;
     text-align: center;
+    border-radius: 35px;
 }
 
 .checkboxes {
     margin: auto;
     width: 40%;
     padding-left: 10%;
-    border: 3px solid white;
+    border: 1px solid rgb(116, 49, 194);
     text-align: left;
+    border-radius: 20%;
 }
 
 .optionsDiv {
-    float: right;
+    float: top;
     width: 30%;
+    /*border: 3px solid red;*/
+    padding-left: 75%;
 }
 
-#removeItemButton:checked + label{
+.removeButton:checked + label{
     /*color: red;*/
     font-weight: bold;
+}
+
+.textInput {
+    border-radius: 4px;
+    font-family: Lato;
+    border-radius: 50px;
+    padding-left: 10px;
+}
+
+.addBtn {
+    border-radius: 50px;
+    font-family: Lato;
 }

@@ -14,45 +14,30 @@
             <h2>RESETTING TODO LIST</h2><br>
         </div>
         <div class="appendingDiv">
-            <input type="text" id="todoItemText" value="item name">
-            <button onclick="addTodoItem()">ADD ITEM</button>
-            <button onclick="addCategory()">ADD CATEGORY</button><br>
+            <input class="textInput" type="text" id="todoItemText" placeholder="item name">
+            <button class="addBtn" id="addItemBtn" onclick="addTodoItem()">ADD ITEM</button>
+            <button class="addBtn" id="addCategoryBtn" onclick="addCategory()">ADD CATEGORY</button><br>
         </div>
         <div class="checkboxes" id="categories">
             <div class="checkboxCategory" id="classDivMage" name="Mage" onclick="setSelectedCatagoryID(this);removeElement(this)">
                 <p class="category-item">Mage</p>
-                <div class="list-item" onclick="removeElement(this)">
-                    <input type="checkbox" id="task1">
-                    <label for="task1" class="strikethrough"> Vault </label><br>
-                </div>
-                <div class="list-item" onclick="removeElement(this)">
-                    <input type="checkbox" id="task2">
-                    <label for="task2" class="strikethrough"> SOO </label><br>
-                </div>
-                <div class="list-item" onclick="removeElement(this)">
-                    <input type="checkbox" id="task3">
-                    <label for="task3" class="strikethrough"> NW </label><br>
-                </div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="mage-task-Vault"><label for="task-Vault" class="strikethrough"> Vault </label><br></div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="mage-task-SOO"><label for="task-SOO" class="strikethrough"> SOO </label><br></div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="mage-task-NW"><label for="task-NW" class="strikethrough"> NW </label><br></div>
             </div>
             <div class="checkboxCategory" id="classDivPaladin" name="Paladin" onclick="setSelectedCatagoryID(this);removeElement(this)">
                 <p class="category-item">Paladin</p>
-                <div class="list-item" onclick="removeElement(this)">
-                    <input type="checkbox" id="task1">
-                    <label for="task1" class="strikethrough"> SOO </label><br>
-                </div>
-                <div class="list-item" onclick="removeElement(this)">
-                    <input type="checkbox" id="task2">
-                    <label for="task2" class="strikethrough"> BFA dungy </label><br>
-                </div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="pala-task-SOO"><label for="task-SOO" class="strikethrough"> SOO </label><br></div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="pala-task-BFA dungy"><label for="task-BFA dungy" class="strikethrough"> BFA dungy </label><br></div>
             </div>
         </div>
         <div class="optionsDiv">
-            <div class="removeButton">
-                <input type="checkbox" name="removeItemButton" id="removeItemButton">
+            <div>
+                <input class="removeButton" type="checkbox" name="removeItemButton" id="removeItemButton">
                 <label for="removeItemButton">RI</label>
             </div>
-            <div class="removeButton">
-                <input type="checkbox" name="removeCategoryButton" id="removeCategoryButton">
+            <div>
+                <input class="removeButton" type="checkbox" name="removeCategoryButton" id="removeCategoryButton">
                 <label for="removeCategoryButton">RC</label>
             </div>
         </div>

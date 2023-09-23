@@ -14,7 +14,6 @@ function removeElement(labelElement) {
 
 function addTodoItem() {
     var parentElement = document.getElementById(selectedCatagoryID);
-
     if(parentElement == null)
         return;
 
@@ -23,7 +22,7 @@ function addTodoItem() {
     if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
         return;
 
-    var elementID = "task-" + textInput;
+    var elementID = parentElement.getAttribute("name").toLocaleLowerCase() + "-task-" + textInput;
     
     var containerElement = document.createElement("div");
     containerElement.className = "list-item";
@@ -63,7 +62,7 @@ function addCategory() {
     var checkboxCategoryElement = document.createElement("div");
     checkboxCategoryElement.className = "checkboxCategory";
     checkboxCategoryElement.id = "classDiv" + textInput;
-    checkboxCategoryElement.name = textInput;
+    checkboxCategoryElement.setAttribute("name", textInput);
     checkboxCategoryElement.onclick = function() { setSelectedCatagoryID(this); };
 
     var nameCategoryElement = document.createElement("p");
@@ -111,12 +110,13 @@ function loadLocalData() {
         var listItem = listItems[i];
         listItem.onclick = function() { removeElement(this); };
         listItem.childNodes[0].addEventListener("change", function() { itemCheckedChange(this);} );
-        listItem.childNodes[1].addEventListener("change", function() { itemCheckedChange(this);} );
-        //alert(localStorage.getItem(listItem.id))
-        //if(localStorage.getItem(listItem.id) == "true") {
-        //    listItem.checked = true;
-        //}
+
+        if(localStorage.getItem(listItem.childNodes[0].id) == "true") {
+            listItem.childNodes[0].checked = true;
+        }
     }
+
+    console.log(document.getElementById("categories").innerHTML);
 
     // remove category function
     var listCategory = document.getElementsByClassName("checkboxCategory");
@@ -131,10 +131,6 @@ function uncheckRemoveButtons() {
 }
 
 function itemCheckedChange(item) {
-    /*if (item.checked) {
-        alert("x " + item.id + " Checkbox is checked..");
-    } else {
-        alert("x " +  item.id + " Checkbox is not checked..");
-    }*/
-    localStorage.setItem(item.id, item.checked);
+    localStorage.setItem(item.id, item.checked.toString());
+    //console.log("key: " + item.id + " value: " + item.checked.toString());
 }
