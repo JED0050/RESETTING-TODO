@@ -12,6 +12,16 @@ function removeElement(labelElement) {
     }
 }
 
+function removeElementIcon(labelElement) {
+    if (labelElement == null)
+        return;
+
+    if (labelElement.className == "material-icons") {
+        labelElement.parentElement.remove();
+        saveLocalData();
+    }
+}
+
 function addTodoItem() {
     var parentElement = document.getElementById(selectedCatagoryID);
     if(parentElement == null)
@@ -41,8 +51,19 @@ function addTodoItem() {
     labelCheckbox.className = "strikethrough";
     labelCheckbox.textContent = " " + textInput + " ";
 
+    //<i class="material-icons">edit</i><i class="material-icons">delete</i>
+    var iconEdit = document.createElement("i");
+    iconEdit.className = "material-icons";
+    iconEdit.textContent = "edit";
+
+    var iconDelete = document.createElement("i");
+    iconDelete.className = "material-icons";
+    iconDelete.textContent = "delete";
+
     containerElement.appendChild(inputCheckbox);
     containerElement.appendChild(labelCheckbox);
+    containerElement.appendChild(iconDelete);
+    containerElement.appendChild(iconEdit);
     containerElement.appendChild(document.createElement("br"));
     
     parentElement.appendChild(containerElement);
@@ -120,14 +141,22 @@ function loadLocalData() {
             listItem.childNodes[0].checked = true;
         }
     }
-
-    console.log(document.getElementById("checkboxPanel").innerHTML);
-
+    
+    // remove item icons in list item
+    var iconItems = document.getElementsByClassName("material-icons");
+    for (var i = 0; i < iconItems.length; i++) {
+        if(iconItems[i].textContent == "delete") {
+            iconItems[i].onclick = function() { removeElementIcon(this); };
+        }
+    }
+    
     // remove category function
     var listCategory = document.getElementsByClassName("checkboxCategory");
     for (var i=0; i < listCategory.length; i++) {
         listCategory[i].onclick = function() { setSelectedCatagoryID(this); removeElement(this); };
     }
+    
+    //console.log(document.getElementById("checkboxPanel").innerHTML);
 }
 
 function uncheckRemoveButtons() {
@@ -142,4 +171,28 @@ function itemCheckedChange(item) {
 
 function resetTextInputText() {
     document.getElementById("todoItemText").value = "";
+}
+
+function loadFileData() {
+    var input = document.createElement('input');
+    input.type = 'file';
+
+    input.onchange = e => { 
+
+        // getting a hold of the file reference
+        var file = e.target.files[0]; 
+     
+        // setting up the reader
+        var reader = new FileReader();
+        reader.readAsText(file,'UTF-8');
+     
+        // here we tell the reader what to do when it's done reading...
+        reader.onload = readerEvent => {
+            var content = readerEvent.target.result; // this is the content!
+            content = content.split("\n");
+            //console.log( content );
+        }
+    }
+
+    input.click();
 }
