@@ -1,21 +1,126 @@
+/* BODY */
+
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
+:root {
+    --col-primary: rgb(116, 49, 194);
+    --col-secondary: rgb(178, 136, 226);
+}
+
 body {
-    background-color: rgb(116, 49, 194);
-    background-image: linear-gradient(to right, rgb(116, 49, 194), #ff7b00);
-    color: rgb(116, 49, 194);
+    background-color: var(--col-primary);
+    background-image: linear-gradient(to right, var(--col-primary), #ff7b00);
+    color: var(--col-primary);
     font-family: Lato;
     font-size: larger;
 }
+
+.bodyPanel {
+    margin: auto;
+    width: 40%;
+    min-width: 450px;
+    border: 2px solid black;
+    background-color: aliceblue;
+    text-align: center;
+    border-radius: 15px;
+}
+
+
+/* HEADING */
 
 .headingDiv {
     font-size: larger;
     font-weight: bold;
 }
 
-.checkboxCategory > p {
-    font-weight: bold;
+
+/* ADD SECTION */
+
+.appendingDiv {
+    font-size: large;
+    margin: 3% 3% 2% 3%;
 }
+
+.textInput {
+    font-family: Lato;
+    font-size: large;
+    border: 2px solid black;
+    padding-left: 10px;
+    left: -10px;
+    position: relative;
+    border-radius: 50px;
+    height: 30px;
+    width: 100%;
+}
+
+.addBtn {
+    font-family: Lato;
+    font-size: medium;
+    background-color: var(--col-secondary);
+    border: 2px solid black;
+    position: relative;
+    height: 36px;
+    width: 150px;
+    border-radius: 50px;
+    margin: 1% 0%;
+
+}
+
+.addBtn:hover {
+    background-color: var(--col-primary);
+}
+
+
+/* CATEGORIES AND ITEMS */
+
+.checkboxPanel {
+    margin: auto;
+    width: 95%;
+    padding: 0% 0% 3% 0%;
+    /*border: 1px solid black;*/
+    text-align: left;
+    /*background-color: var(--col-secondary);*/
+    /*border-radius: 5%;*/
+}
+
+.checkboxCategory {
+    width: 95%;
+    margin: auto;
+    color: black;
+}
+
+.category-item {
+    font-size: larger;
+    margin: 3% 0% 1% 0%;
+    font-weight: bold;
+    padding-left: 1%;
+}
+
+/*.list-item > input[type=checkbox] {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+}
+
+.list-item > input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em red;
+}
+
+.list-item > input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}*/
 
 input[type=checkbox]:checked + label.strikethrough{
     text-decoration: line-through;
@@ -23,24 +128,19 @@ input[type=checkbox]:checked + label.strikethrough{
     /*font-weight: bold;*/
 }
 
-.checkboxPanel {
-    margin: auto;
-    width: 40%;
-    min-width: 450px;
-    border: 1px solid black;
-    background-color: aliceblue;
-    text-align: center;
-    border-radius: 15px;
+.list-item {
+    color: black;
+    background-color: var(--col-secondary);
+    margin: 1% 0%;
+    padding: 1% 2%;
 }
 
-.checkboxes {
-    margin: auto;
-    width: 40%;
-    padding: 3% 10%;
-    border: 1px solid black;
-    text-align: left;
-    border-radius: 20%;
+.list-item:hover {
+    background-color: var(--col-primary);
 }
+
+
+/* OPTIONS */
 
 .optionsDiv {
     float: top;
@@ -53,36 +153,3 @@ input[type=checkbox]:checked + label.strikethrough{
     /*color: red;*/
     font-weight: bold;
 }
-
-.appendingDiv {
-    font-size: large;
-    margin: 3%;
-}
-
-.textInput {
-    font-family: Lato;
-    font-size: large;
-    padding-left: 10px;
-    left: -10px;
-    position: relative;
-    border-radius: 50px;
-    height: 30px;
-    width: 100%;
-}
-
-.addBtn {
-    font-family: Lato;
-    font-size: medium;
-    background-color: rgb(178, 136, 226);
-    position: relative;
-    height: 36px;
-    width: 150px;
-    border-radius: 50px;
-    margin: 1% 0%;
-
-}
-
-.addBtn:hover {
-    background-color: rgb(116, 49, 194);
-}
-

@@ -22,6 +22,8 @@ function addTodoItem() {
     if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
         return;
 
+    resetTextInputText();
+
     var elementID = parentElement.getAttribute("name").toLocaleLowerCase() + "-task-" + textInput;
     
     var containerElement = document.createElement("div");
@@ -50,13 +52,16 @@ function addTodoItem() {
 }
 
 function addCategory() {
-    var parentElement = document.getElementById("categories");
+    var parentElement = document.getElementById("checkboxPanel");
     if (parentElement == null)
         return;
 
     var textInput = document.getElementById("todoItemText").value;
     if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
         return;
+
+    resetTextInputText();
+
     textInput = firstCharUpperCase(textInput);
 
     var checkboxCategoryElement = document.createElement("div");
@@ -95,14 +100,14 @@ function setSelectedCatagoryID(categoryElement) {
 }
 
 function saveLocalData() {
-    var value = document.getElementById("categories").innerHTML;
+    var value = document.getElementById("checkboxPanel").innerHTML;
     localStorage.setItem("categories-items", value);
 }
 
 function loadLocalData() {
     let selectedCatagoryID = undefined;
     //return;
-    document.getElementById("categories").innerHTML = localStorage.getItem("categories-items");
+    document.getElementById("checkboxPanel").innerHTML = localStorage.getItem("categories-items");
 
     // remove item function + add event listener to checked
     var listItems = document.getElementsByClassName("list-item");
@@ -116,7 +121,7 @@ function loadLocalData() {
         }
     }
 
-    console.log(document.getElementById("categories").innerHTML);
+    console.log(document.getElementById("checkboxPanel").innerHTML);
 
     // remove category function
     var listCategory = document.getElementsByClassName("checkboxCategory");
@@ -133,4 +138,8 @@ function uncheckRemoveButtons() {
 function itemCheckedChange(item) {
     localStorage.setItem(item.id, item.checked.toString());
     //console.log("key: " + item.id + " value: " + item.checked.toString());
+}
+
+function resetTextInputText() {
+    document.getElementById("todoItemText").value = "";
 }
