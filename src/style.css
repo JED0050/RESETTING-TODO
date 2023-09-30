@@ -96,49 +96,45 @@ body {
     padding-left: 1%;
 }
 
-/*.list-item > input[type=checkbox] {
+.list-item > input[type=checkbox] {
     appearance: none;
-    background-color: #fff;
-    margin: 0;
-    font: inherit;
-    color: currentColor;
-    width: 1.15em;
-    height: 1.15em;
-    border: 0.15em solid currentColor;
-    border-radius: 0.15em;
-    transform: translateY(-0.075em);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 25px;
+    height: 80%;
+    background-color: whitesmoke;
+    border: 2px solid black;
+    border-radius: 4px;
 }
 
-.list-item > input[type="checkbox"]::before {
-    content: "";
-    width: 0.65em;
-    height: 0.65em;
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em red;
+.list-item > input[type="checkbox"]:hover {
+    background-color: lightgray;
 }
 
-.list-item > input[type="checkbox"]:checked::before {
-    transform: scale(1);
-}*/
+.list-item > input[type="checkbox"]:checked {
+    background-color: var(--col-primary);
 
-input[type=checkbox]:checked + label.strikethrough{
+}
+
+.list-item > input[type=checkbox]:checked + label::after{
+    content: "✔";
+}
+
+.list-item > input[type=checkbox]:checked + label.strikethrough{
     text-decoration: line-through;
-    /*color: green;*/
-    /*font-weight: bold;*/
 }
 
 .list-item {
+    position: relative;
     color: black;
+    height: 23px;
     background-color: var(--col-secondary);
     margin: 1% 0%;
-    padding: 1% 2%;
+    padding: 1% 2% 1% 8%;
+    border-radius: 5px;
+    border: 1px solid black;
 }
-
-.list-item:hover {
-    background-color: var(--col-primary);
-}
-
 
 /* OPTIONS */
 
