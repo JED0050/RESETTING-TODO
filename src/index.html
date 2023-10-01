@@ -12,9 +12,10 @@
 <body onload="loadLocalData()">
     <div class="bodyPanel" id="bodyPanel">
         <div class="topOptionsDiv">
-            <button class="loadButton" onclick="loadFileData()">Load Data</button>
+            <button class="loadButton" onclick="importFileData()">Import Data</button>
+            <button class="loadButton" id="exportDataBtn" onclick="exportFileData()">Export Data</button>
         </div>
-        <div class="headingDiv">
+        <div class="headingDiv">    
             <h2>RESETTING TO-DO LIST</h2>
         </div>
         <div class="appendingDiv">
@@ -25,14 +26,14 @@
         <div class="checkboxPanel" id="checkboxPanel">
             <div class="checkboxCategory" id="classDivMage" name="Mage" onclick="setSelectedCatagoryID(this);removeElement(this)">
                 <p class="category-item">Mage</p>
-                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="mage-task-Vault"><label for="task-Vault" class="strikethrough"> Vault </label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
-                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="mage-task-SOO"><label for="task-SOO" class="strikethrough"> SOO </label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
-                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="mage-task-NW"><label for="task-NW" class="strikethrough"> NW </label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="mage-task-Vault"><label for="task-Vault" class="strikethrough">Vault</label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="mage-task-SOO"><label for="task-SOO" class="strikethrough">SOO</label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="mage-task-NW"><label for="task-NW" class="strikethrough">NW</label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
             </div>
             <div class="checkboxCategory" id="classDivPaladin" name="Paladin" onclick="setSelectedCatagoryID(this);removeElement(this)">
                 <p class="category-item">Paladin</p>
-                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="pala-task-SOO"><label for="task-SOO" class="strikethrough"> SOO </label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
-                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="pala-task-BFA dungy"><label for="task-BFA dungy" class="strikethrough"> BFA dungy </label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="pala-task-SOO"><label for="task-SOO" class="strikethrough">SOO</label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
+                <div class="list-item" onclick="removeElement(this)"><input type="checkbox" id="pala-task-BFA dungy"><label for="task-BFA dungy" class="strikethrough">BFA dungy</label><i class="material-icons">delete</i><i class="material-icons">edit</i><br></div>
             </div>
         </div>
         <div class="optionsDiv">

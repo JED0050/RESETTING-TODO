@@ -46,7 +46,6 @@ function addTodoItem(itemName = null) {
     var containerElement = document.createElement("div");
     containerElement.className = "list-item";
     containerElement.onclick = function() { removeElement(this); };
-    //containerElement.setAttribute("onlick", "removeElement(this)");
 
     var inputCheckbox = document.createElement("input");
     inputCheckbox.type = "checkbox";
@@ -56,9 +55,8 @@ function addTodoItem(itemName = null) {
     var labelCheckbox = document.createElement("label");
     labelCheckbox.htmlFor = elementID;
     labelCheckbox.className = "strikethrough";
-    labelCheckbox.textContent = " " + textInput + " ";
+    labelCheckbox.textContent = textInput;
 
-    //<i class="material-icons">edit</i><i class="material-icons">delete</i>
     var iconEdit = document.createElement("i");
     iconEdit.className = "material-icons";
     iconEdit.textContent = "edit";
@@ -66,6 +64,7 @@ function addTodoItem(itemName = null) {
     var iconDelete = document.createElement("i");
     iconDelete.className = "material-icons";
     iconDelete.textContent = "delete";
+    iconDelete.onclick = function() { removeElementIcon(this); };
 
     containerElement.appendChild(inputCheckbox);
     containerElement.appendChild(labelCheckbox);
@@ -174,8 +173,6 @@ function loadLocalData() {
     for (var i=0; i < listCategory.length; i++) {
         listCategory[i].onclick = function() { setSelectedCatagoryID(this); removeElement(this); };
     }
-    
-    //console.log(document.getElementById("checkboxPanel").innerHTML);
 }
 
 function uncheckRemoveButtons() {
@@ -185,29 +182,25 @@ function uncheckRemoveButtons() {
 
 function itemCheckedChange(item) {
     localStorage.setItem(item.id, item.checked.toString());
-    //console.log("key: " + item.id + " value: " + item.checked.toString());
 }
 
 function resetTextInputText() {
     document.getElementById("todoItemText").value = "";
 }
 
-function loadFileData() {
+function importFileData() {
     var input = document.createElement('input');
     input.type = 'file';
     input.accept = ".txt";
 
     input.onchange = e => { 
 
-        // getting a hold of the file reference
-        var file = e.target.files[0]; 
-     
-        // setting up the reader
+        var file = e.target.files[0];  // getting a hold of the file reference
+
         var reader = new FileReader();
         reader.readAsText(file,'UTF-8');
      
-        // here we tell the reader what to do when it's done reading...
-        reader.onload = readerEvent => {
+        reader.onload = readerEvent => {  // here we tell the reader what to do when it's done reading...
             var content = readerEvent.target.result; // this is the content!
             content = content.split("\n");
             var heading = true
@@ -239,4 +232,47 @@ function loadFileData() {
     }
 
     input.click();
+}
+
+function exportFileData() {
+    var fileContent = [];
+
+    var fullCategoryDivs = document.getElementsByClassName("checkboxCategory");
+    for (var i=0; i<fullCategoryDivs.length; i++) {
+        var fullCategoryDiv = fullCategoryDivs[i];
+        var categoryName = fullCategoryDiv.getElementsByClassName("category-item")[0].textContent.trim() + "\n";
+        fileContent.push(categoryName);
+
+        var fullItemDivs = fullCategoryDiv.getElementsByClassName("list-item");
+        for (var j=0; j<fullItemDivs.length; j++) {
+            var itemLabel = fullItemDivs[j].getElementsByClassName("strikethrough")[0];
+            var itemName = itemLabel.textContent.trim() + "\n";
+            
+            var itemCheckbox = fullItemDivs[j].getElementsByTagName("input")[0];
+            if (itemCheckbox.checked) {
+                itemName = "\t" + itemName;
+            }
+
+            fileContent.push(itemName);
+        }
+        fileContent.push("\n");
+    }
+
+    if (fileContent.length == 0)
+        return;
+
+    let textFileAsBlob = new Blob(fileContent, { type: 'text/plain'});
+    let downloadLink = document.createElement('a');
+    downloadLink.download = "RESETTING TO-DO LIST.txt";
+    downloadLink.innerHTML = 'Download File';
+
+    if (window.webkitURL != null)
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob );
+    else {
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
 }
