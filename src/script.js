@@ -22,12 +22,19 @@ function removeElementIcon(labelElement) {
     }
 }
 
-function addTodoItem() {
+function addTodoItem(itemName = null) {
+
     var parentElement = document.getElementById(selectedCatagoryID);
+
     if(parentElement == null)
         return;
 
-    var textInput = document.getElementById("todoItemText").value;
+    var textInput;
+    if (itemName == null) {
+        textInput = document.getElementById("todoItemText").value;
+    } else {
+        textInput = itemName;
+    }
 
     if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
         return;
@@ -70,14 +77,22 @@ function addTodoItem() {
 
     saveLocalData();
     uncheckRemoveButtons();
+
+    return containerElement;
 }
 
-function addCategory() {
+function addCategory(categoryName = null) {
     var parentElement = document.getElementById("checkboxPanel");
     if (parentElement == null)
         return;
 
-    var textInput = document.getElementById("todoItemText").value;
+    var textInput;
+    if(categoryName == null) {
+        textInput = document.getElementById("todoItemText").value;
+    } else {
+        textInput = categoryName;
+    }
+    
     if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
         return;
 
@@ -102,6 +117,10 @@ function addCategory() {
 
     saveLocalData();
     uncheckRemoveButtons();
+
+    setSelectedCatagoryID(checkboxCategoryElement);
+
+    return checkboxCategoryElement;
 }
 
 function firstCharUpperCase(text) {
@@ -176,6 +195,7 @@ function resetTextInputText() {
 function loadFileData() {
     var input = document.createElement('input');
     input.type = 'file';
+    input.accept = ".txt";
 
     input.onchange = e => { 
 
@@ -190,7 +210,31 @@ function loadFileData() {
         reader.onload = readerEvent => {
             var content = readerEvent.target.result; // this is the content!
             content = content.split("\n");
-            //console.log( content );
+            var heading = true
+
+            for(var i = 0; i < content.length; i++)
+            {
+                var line = content[i].trimRight();
+                if(line.trim().length == 0) {
+                    heading = true;
+                    continue;
+                } else if(line.startsWith("---")) { // end of file
+                    break;
+                } else if(line.startsWith("//")) { // comment
+                    continue;
+                }
+                else if (heading || line[line.length - 1] == ":") {
+                    heading = false;
+                    addCategory(line);
+                } else {
+                    var listItem = addTodoItem(line);
+                    var checkboxItem = listItem.getElementsByTagName("input")[0];
+                    if (line.startsWith(" ") || line.startsWith("\t")) {
+                        checkboxItem.checked = true;
+                        itemCheckedChange(checkboxItem);
+                    }
+                }
+            }
         }
     }
 
