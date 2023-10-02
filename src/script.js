@@ -12,14 +12,28 @@ function removeElement(labelElement) {
     }
 }
 
-function removeElementIcon(labelElement) {
-    if (labelElement == null)
+function removeElementIcon(deleteIcon) {
+    if (deleteIcon == null)
         return;
 
-    if (labelElement.className == "material-icons") {
-        labelElement.parentElement.remove();
+    if (deleteIcon.className == "material-icons") {
+        deleteIcon.parentElement.remove();
         saveLocalData();
     }
+}
+
+function editElementIcon(editIcon) {
+    if (editIcon == null)
+        return;
+
+    var textInputText = document.getElementById("todoItemText").value.trim();
+
+    if (textInputText == null || textInputText.length == 0)
+        return;
+    
+    editIcon.previousSibling.previousSibling.textContent = textInputText;
+    document.getElementById("todoItemText").value = "";
+    saveLocalData();
 }
 
 function addTodoItem(itemName = null) {
@@ -60,6 +74,7 @@ function addTodoItem(itemName = null) {
     var iconEdit = document.createElement("i");
     iconEdit.className = "material-icons";
     iconEdit.textContent = "edit";
+    iconEdit.onclick = function() { editElementIcon(this); };
 
     var iconDelete = document.createElement("i");
     iconDelete.className = "material-icons";
@@ -144,7 +159,8 @@ function saveLocalData() {
 }
 
 function loadLocalData() {
-    let selectedCatagoryID = undefined;
+    selectedCatagoryID = undefined;
+    checkAllItems = false;
     //return;
     document.getElementById("checkboxPanel").innerHTML = localStorage.getItem("categories-items");
 
@@ -165,6 +181,8 @@ function loadLocalData() {
     for (var i = 0; i < iconItems.length; i++) {
         if(iconItems[i].textContent == "delete") {
             iconItems[i].onclick = function() { removeElementIcon(this); };
+        } else if(iconItems[i].textContent == "edit") {
+            iconItems[i].onclick = function() { editElementIcon(this); };
         }
     }
     
@@ -182,6 +200,12 @@ function uncheckRemoveButtons() {
 
 function itemCheckedChange(item) {
     localStorage.setItem(item.id, item.checked.toString());
+
+    if (checkAllItems) {
+        checkAllItems = false;
+        var uncheckBtn = document.getElementById("uncheckAllBtn");
+        uncheckBtn.textContent = "Uncheck All";
+    }
 }
 
 function resetTextInputText() {
@@ -276,3 +300,27 @@ function exportFileData() {
 
     downloadLink.click();
 }
+
+function uncheckAllItems() {
+    console.log(checkAllItems);
+
+    var listItems = document.getElementsByClassName("list-item");
+    for (var i = 0; i < listItems.length; i++) {
+        var itemCheckboxElement = listItems[i].childNodes[0];
+        itemCheckboxElement.checked = checkAllItems;  // check or uncheck all to-do items
+        localStorage.setItem(itemCheckboxElement.id, checkAllItems.toString());
+    }
+    
+    var uncheckBtn = document.getElementById("uncheckAllBtn");
+    checkAllItems = !checkAllItems;
+    if (checkAllItems)
+        uncheckBtn.textContent = "Check All";
+    else
+        uncheckBtn.textContent = "Uncheck All";
+}
+
+
+// GLOBAL SCOPE DEFINITIONS
+
+var selectedCatagoryID = undefined;
+var checkAllItems = false;
