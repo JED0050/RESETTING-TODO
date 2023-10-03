@@ -26,73 +26,91 @@ function editElementIcon(editIcon) {
     if (editIcon == null)
         return;
 
-    var textInputText = document.getElementById("todoItemText").value.trim();
-
-    if (textInputText == null || textInputText.length == 0)
-        return;
-    
-    editIcon.previousSibling.previousSibling.textContent = textInputText;
-    document.getElementById("todoItemText").value = "";
-    saveLocalData();
+    var addBtn = document.getElementById("addItemBtn");
+    var textInput = document.getElementById("todoItemText");
+    if(addBtn.textContent == "ADD ITEM") {
+        editingItem = editIcon.previousSibling.previousSibling;
+        textInput.value = editingItem.textContent.trim();
+        document.getElementById("addItemBtn").textContent = "EDIT ITEM";
+        setCursorToTextInput();
+    } else {
+        editingItem.textContent = textInput.value;
+        textInput.value = "";
+        addItemBtn.textContent = "ADD ITEM";
+        saveLocalData();
+        setCursorToTextInput();
+    }
 }
 
 function addTodoItem(itemName = null) {
 
-    var parentElement = document.getElementById(selectedCatagoryID);
+    var addItemBtn = document.getElementById("addItemBtn");
+    setCursorToTextInput();
 
-    if(parentElement == null)
-        return;
-
-    var textInput;
-    if (itemName == null) {
-        textInput = document.getElementById("todoItemText").value;
+    if (addItemBtn.textContent == "ADD ITEM") {
+        var parentElement = document.getElementById(selectedCatagoryID);
+    
+        if(parentElement == null)
+            return;
+    
+        var textInput;
+        if (itemName == null) {
+            textInput = document.getElementById("todoItemText").value;
+        } else {
+            textInput = itemName;
+        }
+    
+        if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
+            return;
+    
+        resetTextInputText();
+    
+        var elementID = parentElement.getAttribute("name").toLocaleLowerCase() + "-task-" + textInput;
+        
+        var containerElement = document.createElement("div");
+        containerElement.className = "list-item";
+        containerElement.onclick = function() { removeElement(this); };
+    
+        var inputCheckbox = document.createElement("input");
+        inputCheckbox.type = "checkbox";
+        inputCheckbox.addEventListener("change", function() { itemCheckedChange(this);} );
+        inputCheckbox.id = elementID;
+        
+        var labelCheckbox = document.createElement("label");
+        labelCheckbox.htmlFor = elementID;
+        labelCheckbox.className = "strikethrough";
+        labelCheckbox.textContent = textInput;
+    
+        var iconEdit = document.createElement("i");
+        iconEdit.className = "material-icons";
+        iconEdit.textContent = "edit";
+        iconEdit.onclick = function() { editElementIcon(this); };
+    
+        var iconDelete = document.createElement("i");
+        iconDelete.className = "material-icons";
+        iconDelete.textContent = "delete";
+        iconDelete.onclick = function() { removeElementIcon(this); };
+    
+        containerElement.appendChild(inputCheckbox);
+        containerElement.appendChild(labelCheckbox);
+        containerElement.appendChild(iconDelete);
+        containerElement.appendChild(iconEdit);
+        containerElement.appendChild(document.createElement("br"));
+        
+        parentElement.appendChild(containerElement);
+    
+        saveLocalData();
+        uncheckRemoveButtons();
+    
+        return containerElement;
     } else {
-        textInput = itemName;
+        var textInput = document.getElementById("todoItemText");
+
+        editingItem.textContent = textInput.value;
+        textInput.value = "";
+        addItemBtn.textContent = "ADD ITEM";
+        saveLocalData();
     }
-
-    if (textInput == null || textInput.replaceAll(/\s/g,'').length == 0)
-        return;
-
-    resetTextInputText();
-
-    var elementID = parentElement.getAttribute("name").toLocaleLowerCase() + "-task-" + textInput;
-    
-    var containerElement = document.createElement("div");
-    containerElement.className = "list-item";
-    containerElement.onclick = function() { removeElement(this); };
-
-    var inputCheckbox = document.createElement("input");
-    inputCheckbox.type = "checkbox";
-    inputCheckbox.addEventListener("change", function() { itemCheckedChange(this);} );
-    inputCheckbox.id = elementID;
-    
-    var labelCheckbox = document.createElement("label");
-    labelCheckbox.htmlFor = elementID;
-    labelCheckbox.className = "strikethrough";
-    labelCheckbox.textContent = textInput;
-
-    var iconEdit = document.createElement("i");
-    iconEdit.className = "material-icons";
-    iconEdit.textContent = "edit";
-    iconEdit.onclick = function() { editElementIcon(this); };
-
-    var iconDelete = document.createElement("i");
-    iconDelete.className = "material-icons";
-    iconDelete.textContent = "delete";
-    iconDelete.onclick = function() { removeElementIcon(this); };
-
-    containerElement.appendChild(inputCheckbox);
-    containerElement.appendChild(labelCheckbox);
-    containerElement.appendChild(iconDelete);
-    containerElement.appendChild(iconEdit);
-    containerElement.appendChild(document.createElement("br"));
-    
-    parentElement.appendChild(containerElement);
-
-    saveLocalData();
-    uncheckRemoveButtons();
-
-    return containerElement;
 }
 
 function addCategory(categoryName = null) {
@@ -100,6 +118,8 @@ function addCategory(categoryName = null) {
     if (parentElement == null)
         return;
 
+    setCursorToTextInput();
+    
     var textInput;
     if(categoryName == null) {
         textInput = document.getElementById("todoItemText").value;
@@ -118,11 +138,10 @@ function addCategory(categoryName = null) {
     checkboxCategoryElement.className = "checkboxCategory";
     checkboxCategoryElement.id = "classDiv" + textInput;
     checkboxCategoryElement.setAttribute("name", textInput);
-    checkboxCategoryElement.onclick = function() { setSelectedCatagoryID(this); };
+    checkboxCategoryElement.onclick = function() { setSelectedCatagoryID(this); removeElement(this);};
 
     var nameCategoryElement = document.createElement("p");
     nameCategoryElement.className = "category-item";
-    nameCategoryElement.onclick = function() { removeElement(nameCategoryElement); };
     nameCategoryElement.innerHTML = textInput;
 
     checkboxCategoryElement.appendChild(nameCategoryElement);
@@ -150,7 +169,9 @@ function setSelectedCatagoryID(categoryElement) {
         paragraphElement.style.textDecoration = "none";
     }
 
-    categoryElement.getElementsByTagName("p")[0].style.textDecoration = "underline";
+    if (categoryElement.getElementsByTagName("p")[0] != undefined) {
+        categoryElement.getElementsByTagName("p")[0].style.textDecoration = "underline";
+    }
 }
 
 function saveLocalData() {
@@ -159,10 +180,14 @@ function saveLocalData() {
 }
 
 function loadLocalData() {
+    document.getElementById("checkboxPanel").innerHTML = localStorage.getItem("categories-items");
+}
+
+function setDefaultBehaviour() {
     selectedCatagoryID = undefined;
     checkAllItems = false;
-    //return;
-    document.getElementById("checkboxPanel").innerHTML = localStorage.getItem("categories-items");
+
+    setCursorToTextInput();
 
     // remove item function + add event listener to checked
     var listItems = document.getElementsByClassName("list-item");
@@ -191,6 +216,14 @@ function loadLocalData() {
     for (var i=0; i < listCategory.length; i++) {
         listCategory[i].onclick = function() { setSelectedCatagoryID(this); removeElement(this); };
     }
+
+    // text input enter will click add item btn
+    document.getElementById("todoItemText").addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode == 13) {
+            document.getElementById("addItemBtn").click();
+        }
+    });
 }
 
 function uncheckRemoveButtons() {
@@ -302,8 +335,6 @@ function exportFileData() {
 }
 
 function uncheckAllItems() {
-    console.log(checkAllItems);
-
     var listItems = document.getElementsByClassName("list-item");
     for (var i = 0; i < listItems.length; i++) {
         var itemCheckboxElement = listItems[i].childNodes[0];
@@ -319,8 +350,16 @@ function uncheckAllItems() {
         uncheckBtn.textContent = "Uncheck All";
 }
 
+function setCursorToTextInput() {
+    document.getElementById("todoItemText").focus();
+    /*var textInput = document.getElementById("todoItemText");
+    textInput.focus();
+    textInput.select();*/
+}
+
 
 // GLOBAL SCOPE DEFINITIONS
 
 var selectedCatagoryID = undefined;
 var checkAllItems = false;
+var editingItem = undefined;

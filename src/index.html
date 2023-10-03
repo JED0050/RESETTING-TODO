@@ -3,13 +3,14 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>RESETTING TO-DO LIST 📝</title>
+    <title>RESETTING TO-DO LIST</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="shortcut icon" href="images/favicon.ico">
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src='script.js'></script>
 </head>
-<body onload="loadLocalData()">
+<body onload="loadLocalData();setDefaultBehaviour()">
     <div class="bodyPanel" id="bodyPanel">
         <div class="topOptionsDiv">
             <button class="loadButton" id="uncheckAllBtn" onclick="uncheckAllItems()">Uncheck All</button>
